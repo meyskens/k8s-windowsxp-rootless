@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: winxp
+  labels:
+    app: winxp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: winxp
+  template:
+    metadata:
+      labels:
+        app: winxp
+    spec:
+      volumes:
+      - name: pv-storage
+        persistentVolumeClaim:
+          claimName: winxp-pvc
+      containers:
+      - name: winxp
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: 1
+        image: maartje/k8s-windows-xp-rootless:latest
+        imagePullPolicy: Always
+        command: 
+          - /run.sh
+          - -w
+          - -d
+          - /media/winxp.img
+        volumeMounts:
+          - mountPath: "/media/"
+            name: pv-storage
+        ports:
+          - containerPort: 3389
+            name: rdp
