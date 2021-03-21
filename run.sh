@@ -17,7 +17,7 @@ while getopts "wd:c:e:r:n:" opt; do
     d) HDD=$OPTARG   ;;
     e) EXTRAARGS=$OPTARG   ;;
     r) RAM=$RAM   ;;
-    rn) NIC=$NIC   ;;
+    n) NIC=$NIC   ;;
     *) echo 'error' >&2
        exit 1
   esac
