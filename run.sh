@@ -6,16 +6,18 @@ set -o pipefail
 
 WAIT_FOR_DISK=false
 CD=""
-HDD="winnt.img"
+HDD="winxp.img"
 EXTRAARGS=""
 RAM="512"
-while getopts "wd:c:e:r:" opt; do
+NIC="rtl8139"
+while getopts "wd:c:e:r:n:" opt; do
   case $opt in
     w) WAIT_FOR_DISK=true   ;;
     c) CD=$OPTARG   ;;
     d) HDD=$OPTARG   ;;
     e) EXTRAARGS=$OPTARG   ;;
     r) RAM=$RAM   ;;
+    rn) NIC=$NIC   ;;
     *) echo 'error' >&2
        exit 1
   esac
@@ -52,7 +54,7 @@ qemu-system-i386 \
     -m $RAM \
     -vga std \
     -soundhw ac97 \
-    -net nic,model=rtl8139 \
+    -net nic,model=$NIC \
     -net user,hostfwd=tcp::3389-:3389 \
     -drive file=$HDD,format=raw \
     $EXTRAARGS
