@@ -47,7 +47,7 @@ fi
 
 
 if [[ "$CD" != "" ]]; then
-    EXTRAARGS+="-drive file=$CD,media=cdrom"
+    EXTRAARGS+="-drive file=$CD,media=cdrom,bus=1"
 fi
 
 qemu-system-i386 \
